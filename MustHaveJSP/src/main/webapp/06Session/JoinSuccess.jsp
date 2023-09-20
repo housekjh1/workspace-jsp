@@ -9,8 +9,8 @@
 <body>
 	<h2><%= request.getAttribute("msg") %></h2>
 	<br/>
-	<a href="InsertForm.jsp">입력창으로 돌아가기</a>
+	<a href="JoinForm.jsp">입력창으로 돌아가기</a>
 	<br/>
-	<a href="../../06Session/LoginForm.jsp">로그인창으로 돌아가기</a>
+	<a href="LoginForm.jsp">로그인창으로 돌아가기</a>
 </body>
 </html>

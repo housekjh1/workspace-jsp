@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="InsertProcess.jsp" method="post">
+	<form action="JoinProcess.jsp" method="post">
 
 		<table border="1">
 
@@ -29,6 +29,6 @@
 
 		</table>
 	</form>
-	<a href="../../06Session/LoginForm.jsp">로그인창으로 돌아가기</a>
+	<a href="LoginForm.jsp">로그인창으로 돌아가기</a>
 </body>
 </html>
