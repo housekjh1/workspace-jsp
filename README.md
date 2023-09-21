@@ -3,7 +3,7 @@
 
 ## 설치 환경
 - 이클립스 웹 디벨로퍼
-- 톰캣
+- [톰캣 10.1](https://tomcat.apache.org/download-10.cgi)
 
 ## 배포
 - 프로젝트 우클릭 Properties > Web Project Settings > Context root: '수정'
