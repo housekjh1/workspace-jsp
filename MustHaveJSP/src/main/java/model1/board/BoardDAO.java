@@ -97,6 +97,52 @@ public class BoardDAO extends JDBConnect {
 		return bbs;
 	}
 
+	public List<BoardDTO> selectListPage(Map<String, Object> map) {
+		List<BoardDTO> bbs = new Vector<BoardDTO>();
+		Connection con = getConnection();
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+//		String query = "select * from board where (num between ? and ?)";
+		String query = "select * from board ";
+		if (map.get("searchWord") != null) {
+//			query += " and " + map.get("searchField") + " like '%" + map.get("searchWord") + "%'";
+			query += ("where " + map.get("searchField") + " like '%" + map.get("searchWord") + "%'");
+		}
+		query += " order by num desc limit ?, ?";
+
+		try {
+			pst = con.prepareStatement(query);
+//			pst.setString(1, map.get("start").toString());
+//			pst.setString(2, map.get("end").toString());
+			pst.setInt(1, Integer.parseInt(map.get("start").toString()) - 1);
+			pst.setInt(2, Integer.parseInt(map.get("pageSize").toString()));
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setNum(rs.getString("num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setPostdate(rs.getDate("postdate"));
+				dto.setId(rs.getString("id"));
+				dto.setVisitcount(rs.getString("visitcount"));
+				bbs.add(dto);
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 조회 중 예외 발생" + e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pst != null)
+					pst.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return bbs;
+	}
+
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
 		PreparedStatement pst = null;
@@ -165,7 +211,7 @@ public class BoardDAO extends JDBConnect {
 			Connection con = getConnection();
 			pst = con.prepareStatement(query);
 			pst.setString(1, num);
-			pst.executeQuery();
+			pst.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("게시물 조회수 증가 중 예외 발생" + e.getMessage());
 		} finally {
