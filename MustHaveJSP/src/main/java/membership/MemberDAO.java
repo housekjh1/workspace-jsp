@@ -8,7 +8,6 @@ import common.JDBConnect;
 import jakarta.servlet.ServletContext;
 
 public class MemberDAO extends JDBConnect {
-	private JDBConnect jdbc;
 	private Connection con;
 	
 	public MemberDAO() {
@@ -16,14 +15,14 @@ public class MemberDAO extends JDBConnect {
 		this.con = super.getConnection();
 	}
 	
-	public static void main(String[] args) {
-		MemberDAO ma = new MemberDAO();
-		MemberDTO mt = ma.getMemberDTO("musthave", "1234");
-		System.out.println("member:"+mt);
-	}
+//	public static void main(String[] args) {
+//		MemberDAO ma = new MemberDAO();
+//		MemberDTO mt = ma.getMemberDTO("musthave", "1234");
+//		System.out.println("member:"+mt);
+//	}
 	
 	public MemberDAO(ServletContext application) {
-		jdbc = new JDBConnect(application);
+		con = getConnection();
 		
 	}
 	
@@ -32,7 +31,6 @@ public class MemberDAO extends JDBConnect {
 		String query = "select * from member where id=? and pass=?";
 		
 		try {
-			Connection con = jdbc.getConnection();
 			PreparedStatement pst = con.prepareStatement(query);
 			pst.setString(1, uid);
 			pst.setString(2, upass);
@@ -47,8 +45,6 @@ public class MemberDAO extends JDBConnect {
 			
 			rs.close();
 			pst.close();
-			con.close();
-			jdbc.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
