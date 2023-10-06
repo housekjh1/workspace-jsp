@@ -119,6 +119,48 @@ public class MVCBoardDAO extends JDBConnect {
 		}
 		return result;
 	}
+	
+	public int insertWrite2(MVCBoardDTO dto) {
+		int result = 0;
+		Connection con = getConnection();
+		PreparedStatement pst = null;
+		try {
+			con.setAutoCommit(false);
+			String query = "insert into mvcboard2 ( " + " name, title, content, pass) " + " values ( "
+					+ " ?, ?, ?, ?)";
+			pst = con.prepareStatement(query);
+			pst.setString(1, dto.getName());
+			pst.setString(2, dto.getTitle());
+			pst.setString(3, dto.getContent());
+			pst.setString(4, dto.getPass());
+			pst.executeUpdate();
+			String query2 = "insert into mvcboardfile (idx) values (?)";
+			pst = con.prepareStatement(query2);
+			pst.setInt(1, Integer.parseInt(dto.getIdx()));
+			pst.executeUpdate();
+			String query3 = "insert into mvcboardfile (ofile, sfile) values (?, ?) where mvcboard2.idx = mvcboardfile.idx";
+			pst = con.prepareStatement(query3);
+			pst.setString(1, dto.getOfile());
+			pst.setString(2, dto.getSfile());
+			pst.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				if (pst != null)
+					pst.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 //	public static void main(String[] args) {
 //		JDBConnect jdbc = new JDBConnect();
