@@ -53,4 +53,17 @@
 		<servlet-name>HelloServlet</servlet-name>
 		<url-pattern>/12Servlet/HelloServlet.do</url-pattern>
 	</servlet-mapping>
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>BasicFilter</filter-name> -->
+<!-- 		<filter-class>filter.BasicFilter</filter-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>FILTER_INIT_PARAM</param-name> -->
+<!-- 			<param-value>필터 초기화 매개변수</param-value> -->
+<!-- 		</init-param> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>BasicFilter</filter-name> -->
+<!-- 		<url-pattern>/15FilterListener/BasicFilter.jsp</url-pattern> -->
+<!-- 	</filter-mapping> -->
 </web-app>
